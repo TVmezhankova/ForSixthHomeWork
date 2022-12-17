@@ -1,67 +1,33 @@
-﻿// Задайте две матрицы.
-//Напишите программу , которая будет находить
-//произведение двух матриц.
+﻿// Задайте прямоугольный двумерный массив.
+// Напишите программу, которая будет находить строку с наименьшей суммой элементов.
 
-Console.Write("Введите количество строк массива A : ");
+Console.Write("Введите количество строк исходного массива : ");
 int rows = int.Parse(Console.ReadLine());
-
-Console.Write("Введите количество столбцов массива A : ");
+int m = rows;
+Console.Write("Введите количество столбцов исходного массива (столбцов должно быть больше, чем строк) : ");
 int columns = int.Parse(Console.ReadLine());
+int n = columns;
+int[,]array = GetArrayMatrix(rows, columns, 0, 9);
 
-Console.Write("Введите количество строк массива B: ");
-int rows1 = int.Parse(Console.ReadLine());
-
-Console.Write("Введите количество столбцов массива B: ");
-int columns1 = int.Parse(Console.ReadLine());
-if ( rows != columns1) 
-{
-    Console.WriteLine(" Умножение матриц невозможно :");
-    goto Found;
-}
-else
+Console.WriteLine();
+Console.Write("Исходная матрица : ");
+Console.WriteLine();
+PrintArray(array);
 Console.WriteLine();
 
+PrintArray(array);
 
 
-
-int[,] result =GetArrayMatrix (rows, columns, -10, 10);
-Console.WriteLine(" Исходная матрица А :");
-PrintArray(result);
-Console.WriteLine();
-
-int[,] result1 =GetArrayMatrix (rows1, columns1, -10, 10);
-Console.WriteLine(" Исходная матрица B :");
-PrintArray(result1);
-
-
-
-
-int[,] resMultip = new int[columns, rows1];
-
-
- 
-    {
-            
-           for (int i = 0; i < rows; i++)
-                for (int j = 0; j < columns1; j++)
-                    for (int k = 0; k <columns1; k++)
-                        resMultip[i, j] += result[i, k]*result1[k, j];
-                        Console.WriteLine(" Результат умножения матриц А и B :");
-         PrintArray( resMultip);
-    }
-
-      
-
-
+Console.WriteLine(MinSum);
 
 int[,]GetArrayMatrix( int m, int n, int minValue, int maxValue)
 {
     int[,] result = new int[m, n];
     for(int i=0; i<m; i++)
     {
-        for(int j=0; j<n; j++)
+       for(int j=0; j<n; j++)
         {
-            result[i,j]= new Random().Next(minValue, maxValue+1 );
+           result[i,j]= new Random().Next(minValue, maxValue+1 );
         }
     }
     return result;
@@ -69,9 +35,9 @@ int[,]GetArrayMatrix( int m, int n, int minValue, int maxValue)
 
 void PrintArray(int[,]inArray)
 {
-    for(int i=0; i<inArray.GetLength(0); i++)
+    for(int i=0; i<m; i++)
     {
-        for(int j=0; j<inArray.GetLength(1); j++)
+        for(int j=0; j<n; j++)
         {
             Console.Write($"{inArray[i,j]}  ");
         }
@@ -79,5 +45,24 @@ void PrintArray(int[,]inArray)
     }
 }
 
-Found:
-Console.WriteLine(" The END ");
+int MinSum (int[,] array)
+{
+    int minSum=int.MaxValue;
+    for(int i=0; i<array.GetLength(0); i++)
+    {
+       int sum=0;
+        for(int j=0; j<array.GetLength(1); j++)
+        {
+            sum+=array[i,j];
+        }
+         if (sum<minSum)
+         minSum=sum;
+    }
+    return minSum;
+} 
+
+
+
+
+
+
